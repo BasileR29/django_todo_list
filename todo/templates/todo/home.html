@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>Bonjour {{ user.username }}, </p>
+<p>Vous êtes bien connecté.</p>
+
+<div class="container">
+<h3>Les notes publiques</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Résumé</th>
+          <th>Créee le</th>
+          <th>Dernière maj</th>
+          <th>Auteur</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for note in notes %}
+        <tr>
+          <td>{{ note.titre }}</td>
+          {% with note.extrait as ext %}
+          <td>{{ ext }}</td>
+          {% endwith %}
+          <td>{{ note.creation_date}}</td>
+          <td>{{ note.update_date}}</td>
+          <td>{{ note.auteur }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>    
+    
+<div class="container px-4">   
+<h3>Mes notes</h3>
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Résumé</th>
+          <th>Créee le</th>
+          <th>Dernière maj</th>
+          <th>Auteur</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for note in privees %}
+        <tr>
+          <td>{{ note.titre }}</td>
+          
+          {% with note.extrait as ext %}
+          <td>{{ ext }}</td>
+          {% endwith %}
+          
+          <td>{{ note.creation_date}}</td>
+          <td>{{ note.update_date}}</td>
+          <td>{{ note.auteur }}</td>
+          <td>
+              <a href="{% url 'edit_note' note.id %}">
+                  <i class="fa-solid fa-pen-to-square" ></i>
+              </a>
+              <a href="{% url 'delete_note' note.id %}">
+                  <i class="fa-solid fa-trash" style="color:red"></i>
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>    
+{% endblock %}
+
+
